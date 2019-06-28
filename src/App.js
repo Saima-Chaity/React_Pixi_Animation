@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Graphics from "./Graphics";
 import ParticleEmitter from './ParticleEmitter';
 
 class App extends Component{
@@ -11,6 +12,7 @@ class App extends Component{
   render(){
     return (
       <div>
+        <Graphics />
         <ParticleEmitter />
       </div>
     );
