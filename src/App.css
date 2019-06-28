@@ -7,14 +7,24 @@
 }
 
 canvas{
-  margin: 10em 12em;
+  margin: 1em 0.2em;
+  border: 5px solid #50b490;
+}
+
+.prev, .next{
+  margin-left: 0.4em;
+}
+
+.properties{
+  margin-left: 68em;
 }
 
 .SideBar{
   display: inline-block;
   position: absolute;
   margin: auto;
-  padding-left: 3em;
+  padding-left: 56em;
+  top: 0.5em;
 }
 
 .output {

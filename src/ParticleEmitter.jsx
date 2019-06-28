@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import * as PIXI from 'pixi.js';
 import * as particles from 'pixi-particles';
 import SideMenu from './SideMenu';
-import circle from "./circle.png";
+import Explosion from './Explosion';
+import rainbow from "./rainbow.png";
 import './App.css';
 
 class ParticleEmitter extends Component{
@@ -10,6 +11,7 @@ class ParticleEmitter extends Component{
     super(props)
 
     this.state = {
+      nextAnimation : false,
       numberOfParticles : 0,
       minStartingRotation : 0,
       maxStartingRotation : 0,
@@ -33,10 +35,9 @@ class ParticleEmitter extends Component{
       uvs: true,
       alpha: true
     });
-    // this.stage = new PIXI.Container();
-    this.renderer = new PIXI.autoDetectRenderer({transparent:false, antialias:true, autoResize:true, resolution:2, clearBeforeRender: true})
+    this.renderer = new PIXI.autoDetectRenderer({width:window.innerWidth / 1.5, height: window.innerHeight/1.8, transparent:false, antialias:true, autoResize:true, resolution:2, clearBeforeRender: true})
     this.renderer.resize(window.innerWidth / 1.5, window.innerHeight/1.8);
-    this.renderer.backgroundColor = 0xFF6000;
+    this.renderer.backgroundColor = 0x000000;
     this.circle = null;
     this.texture = null;
     this.sprite = null;
@@ -56,14 +57,22 @@ class ParticleEmitter extends Component{
     this.setState({changeProperties : true})
   }
 
+  showNextAnimation = () => {
+    this.setState({nextAnimation: true})
+  }
+
   onMouseMove = (event) => {
-    if((200 < event.screenX <1030 && 200 < event.screenY < 350)){
+    // console.log(event.offsetX, event.offsetY)
+    if((0 < event.offsetX <860 && 0 < event.offsetY < 355)){
+      console.log("tre")
       this.emitter.emit = true;
       this.emitter.resetPositionTracking();
-      this.emitter.updateOwnerPos(event.layerX || event.offsetX, event.layerY || event.offsetY);  
+      this.emitter.updateOwnerPos(event.offsetX, event.offsetY);  
     }
     else{
-      this.emitter.updateOwnerPos(window.innerWidth / 3, window.innerHeight / 3.5);
+      console.log('false')
+      document.removeEventListener('mousemove')
+      this.emitter.updateOwnerPos(window.innerWidth / 2, window.innerHeight / 2.5);
     }
   }
 
@@ -171,7 +180,7 @@ class ParticleEmitter extends Component{
   getParticles = ()=>{
     this.emitter = new particles.Emitter(
       this.stage,
-      [PIXI.Texture.from(circle)],
+      [PIXI.Texture.from(rainbow)],
       {
         alpha: {
           list: [
@@ -189,7 +198,7 @@ class ParticleEmitter extends Component{
         scale: {
           list: [
             {
-              value: 0.1,
+              value: 0.09,
               time: 0
             },
             {
@@ -202,11 +211,11 @@ class ParticleEmitter extends Component{
         color: {
           list: [
             {
-              value: "1900b3",
+              value: "e9eb2e",
               time: 0
             },
             {
-              value: "ad1500",
+              value: "e9eb2e",
               time: 1
             }
           ],
@@ -288,10 +297,15 @@ class ParticleEmitter extends Component{
   }
 
   render(){
-    return (
+    return (   
       <div className="wrapper">
-        <div ref={(c) => this.updateContainer = c}></div>
-        <button onClick = {this.changeProperties}>Properties</button>
+        {this.state.nextAnimation == false ?
+        <div>
+          <div ref={(c) => this.updateContainer = c}></div>
+          <button className="next" onClick={this.showNextAnimation}>Next</button>  
+          <button className="properties" onClick = {this.changeProperties}>Properties</button>
+        </div>
+        : <Explosion/>}   
         <div className="SideBar">
           {this.state.changeProperties ?
           <SideMenu 

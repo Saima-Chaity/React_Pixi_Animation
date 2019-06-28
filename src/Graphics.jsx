@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import * as PIXI from 'pixi.js';
 import * as particles from 'pixi-particles';
+import ParticleEmitter from './ParticleEmitter';
 
 class Graphics extends Component{
   constructor(props){
     super(props)
+
+    this.state = {
+      nextAnimation : false,
+    }
 
     this.stage = new PIXI.Container();
     this.renderer = new PIXI.autoDetectRenderer({transparent:false, antialias:true, autoResize:true})
@@ -30,6 +35,10 @@ class Graphics extends Component{
     setTimeout(()=>{
       this.getAllTheShapes(this.star = "star");
     }, 10000)
+  }
+
+  showNextAnimation = () => {
+    this.setState({nextAnimation: true})
   }
 
   getAllTheShapes = (value)=>{
@@ -135,7 +144,14 @@ class Graphics extends Component{
 
   render(){
     return (
-      <div ref={(c) => this.updateContainer = c}></div>
+      <div>
+        {this.state.nextAnimation == false ?
+        <div>
+          <div ref={(c) => this.updateContainer = c}></div>
+          <button className="next" onClick={this.showNextAnimation}>Next</button>  
+        </div>
+        : <ParticleEmitter/>}
+      </div>
     );
   }
 }

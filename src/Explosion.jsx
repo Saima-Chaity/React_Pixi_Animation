@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as PIXI from 'pixi.js';
 import * as particles from 'pixi-particles';
+import Graphics from "./Graphics";
 import sparkle from "./sparkle.png";
 import sparkleInBlue from "./sparkleInBlue.png";
 import { TweenMax, Linear } from 'gsap';
@@ -10,6 +11,7 @@ class Explosion extends Component{
     super(props)
 
     this.state = {
+      nextAnimation : false,
       numberOfParticles : 0,
       minStartingRotation : 0,
       maxStartingRotation : 0,
@@ -40,6 +42,10 @@ class Explosion extends Component{
     this.updateContainer.appendChild(this.renderer.view);
     // document.addEventListener('mousedown', this.onMouseDown)
     this.drawStar();
+  }
+
+  showNextAnimation = () => {
+    this.setState({nextAnimation: true})
   }
 
   onMouseDown = (event) => {
@@ -266,7 +272,14 @@ class Explosion extends Component{
 
   render(){
     return (
-      <div ref={(c) => this.updateContainer = c}></div>
+      <div>
+        {this.state.nextAnimation == false ?
+        <div>
+          <div ref={(c) => this.updateContainer = c}></div>
+          <button className="next" onClick={this.showNextAnimation}>Next</button>  
+        </div>
+        : <Graphics/>}
+      </div>
     );
   }
 }
