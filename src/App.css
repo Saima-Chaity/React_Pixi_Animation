@@ -1,0 +1,43 @@
+.wrapper{
+  position: relative;
+}
+
+.RenderedCanvas{
+  display: inline-block;
+}
+
+canvas{
+  margin: 10em 12em;
+}
+
+.SideBar{
+  display: inline-block;
+  position: absolute;
+  margin: auto;
+  padding-left: 3em;
+}
+
+.output {
+  background: lightblue;
+  color: #fff;
+  border-radius: 2px;
+  padding: 3px 7px;
+  margin: 0px 10px;
+  text-align: center;
+  position: relative;
+}
+
+.output::before{
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 0;
+  width: 0;
+  border: solid 6px lightblue;
+  z-index: -1;
+  border-top-color: white;
+  border-bottom-color: white;
+  border-left-color: white;
+}
