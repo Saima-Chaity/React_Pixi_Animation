@@ -102,33 +102,33 @@ class SideMenu extends Component{
           <div>
             <label>x:</label>
             <input id="range" type="range"
-              value={this.props.spawnCircleX >= 0 ? this.props.spawnCircleX : 350}
-              min={0}
-              max={1000}
+              value={this.props.spawnCircleX ? this.props.spawnCircleX : 0}
+              min={-500}
+              max={500}
               step={1}
               onChange={this.onSpawnCircleXValueChange}
             />
-            <span className="output">{this.props.spawnCircleX ? this.props.spawnCircleX : 350}</span>
+            <span className="output">{this.props.spawnCircleX ? this.props.spawnCircleX : 0}</span>
 
             <br/>
             <br/>
             <label>y:</label>
             <input id="range" type="range"
-              value={this.props.spawnCircleY >= 0 ? this.props.spawnCircleY : 250}
-              min={0}
-              max={1000}
+              value={this.props.spawnCircleY ? this.props.spawnCircleY : 0}
+              min={-250}
+              max={250}
               step={1}
               onChange={this.onSpawnCircleYValueChange}
             />
-            <span className="output">{this.props.spawnCircleY ? this.props.spawnCircleY : 250}</span>
+            <span className="output">{this.props.spawnCircleY ? this.props.spawnCircleY : 0}</span>
 
             <br/>
             <br/>
             <label>r:</label>
             <input id="range" type="range"
-              value={this.props.spawnCircleR >= 0 ? this.props.spawnCircleR : 5}
+              value={this.props.spawnCircleR ? this.props.spawnCircleR : 5}
               min={0}
-              max={1000}
+              max={100}
               step={1}
               onChange={this.onSpawnCircleRValueChange}
             />
@@ -139,32 +139,32 @@ class SideMenu extends Component{
           <div>
             <label>x:</label>
             <input id="range" type="range"
-              value={this.props.spawnRectX >= 0 ? this.props.spawnRectX : 350}
-              min={0}
-              max={1000}
+              value={this.props.spawnRectX ? this.props.spawnRectX : 0}
+              min={-500}
+              max={500}
               step={1}
               onChange={this.onSpawnRectXValueChange}
             />
-            <span className="output">{this.props.spawnRectX ? this.props.spawnRectX : 350}</span>
+            <span className="output">{this.props.spawnRectX ? this.props.spawnRectX : 0}</span>
 
             <br/>
             <br/>
             <label>y:</label>
             <input id="range" type="range"
-              value={this.props.spawnRectY >= 0 ? this.props.spawnRectY : 250}
-              min={0}
-              max={1000}
+              value={this.props.spawnRectY ? this.props.spawnRectY : 0}
+              min={-250}
+              max={250}
               step={1}
               onChange={this.onSpawnRectYValueChange}
             />
-            <span className="output">{this.props.spawnRectY ? this.props.spawnRectY : 250}</span>
+            <span className="output">{this.props.spawnRectY ? this.props.spawnRectY : 0}</span>
             
             <br/>
             <br/>
             <label>w:</label>
             <input id="range" type="range"
-              value={this.props.spawnRectW >= 0 ? this.props.spawnRectW : 5}
-              min={0}
+              value={this.props.spawnRectW ? this.props.spawnRectW : 5}
+              min={-1000}
               max={1000}
               step={1}
               onChange={this.onSpawnRectWValueChange}
@@ -175,9 +175,9 @@ class SideMenu extends Component{
             <br/>
             <label>h:</label>
             <input id="range" type="range"
-              value={this.props.spawnRectH >= 0 ? this.props.spawnRectH : 10}
-              min={0}
-              max={1000}
+              value={this.props.spawnRectH ? this.props.spawnRectH : 10}
+              min={-250}
+              max={250}
               step={1}
               onChange={this.onSpawnRectHValueChange}
             />
