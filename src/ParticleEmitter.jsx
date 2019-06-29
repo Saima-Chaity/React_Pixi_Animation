@@ -62,17 +62,16 @@ class ParticleEmitter extends Component{
   }
 
   onMouseMove = (event) => {
-    // console.log(event.offsetX, event.offsetY)
-    if((0 < event.offsetX <860 && 0 < event.offsetY < 355)){
-      console.log("tre")
+    console.log(event)
+    if((event.clientX < 850 && event.clientY < 290)){
       this.emitter.emit = true;
       this.emitter.resetPositionTracking();
-      this.emitter.updateOwnerPos(event.offsetX, event.offsetY);  
+      this.emitter.updateOwnerPos(event.offsetX || event.layerX, event.offsetY || event.layerY);  
     }
     else{
-      console.log('false')
-      document.removeEventListener('mousemove')
-      this.emitter.updateOwnerPos(window.innerWidth / 2, window.innerHeight / 2.5);
+      this.emitter.emit = true;
+      this.emitter.resetPositionTracking();
+      this.emitter.updateOwnerPos(window.innerWidth / 3, window.innerHeight / 3.5);
     }
   }
 
@@ -279,6 +278,8 @@ class ParticleEmitter extends Component{
         }
       }
   );
+
+  this.emitter.updateOwnerPos(window.innerWidth / 3, window.innerHeight / 3);
 
   var elapsed = Date.now();    
   var updateFrame = () => {
