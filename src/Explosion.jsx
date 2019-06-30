@@ -4,12 +4,8 @@ import React, { Component } from 'react';
 import * as PIXI from 'pixi.js';
 import * as particles from 'pixi-particles';
 import Graphics from "./Graphics";
-import circle_blue from "./circle.png";
-import sparkle from "./sparkle.png";
-import sparkleInBlue from "./sparkleInBlue.png";
+import circle_yellow from "./circle.png";
 import { TweenMax } from "gsap/TweenMax";
-import CSSPlugin from 'gsap/CSSPlugin';
-import { TweenLite } from 'gsap';
 
 class Explosion extends Component{
   constructor(props){
@@ -21,14 +17,6 @@ class Explosion extends Component{
       minStartingRotation : 0,
       maxStartingRotation : 0,
       changeProperties: false,
-      spawnType : '',
-      spawnCircleX : '',
-      spawnCircleY : '',
-      spawnCircleR : '',
-      spawnRectX : '',
-      spawnRectY : '',
-      spawnRectW : '',
-      spawnRectH : '',
     }
   }
 
@@ -45,12 +33,30 @@ class Explosion extends Component{
     this.setState({nextAnimation: true})
   }
 
-  getStar = (color) => {
+  drawStar = ()=>{
     this.star = new PIXI.Graphics();
-    this.star.beginFill('0X' + color);
-    this.star.drawStar(20, 20, 10, 20, 5, 3);
+    this.star.beginFill(0x3134A1);
+    this.star.drawStar(50, 50, 10, 50, 18, 5);
     this.star.endFill();
-  }
+
+    this.texture = new PIXI.RenderTexture.create(this.star.width, this.star.height);
+    this.renderer.render(this.star, this.texture);
+
+    this.sprite = new PIXI.Sprite(this.texture);
+    this.sprite.position.x = 700;
+    this.sprite.position.y = 390;
+    this.sprite.position.x = this.renderer.width / 2;
+    this.sprite.position.y = this.renderer.height / 2;
+    this.sprite.scale.set(0.5);
+
+    var animate = () => {
+      requestAnimationFrame(animate);
+      this.sprite.rotation -=0.05;
+      this.renderer.render(this.stage);
+    }
+    animate();
+    this.getStars();
+  };
 
   getStars = () => {
     this.getStar('0000ff')
@@ -71,10 +77,16 @@ class Explosion extends Component{
       var values = [{x:950,y:550},{x:400,y:180}]
       this.generateSprite("1250", "1000", values);
     }, 15)
-
     setTimeout(() => {
       this.getParticles();
     }, 5)
+  }
+
+  getStar = (color) => {
+    this.star = new PIXI.Graphics();
+    this.star.beginFill('0X' + color);
+    this.star.drawStar(20, 20, 10, 20, 5, 3);
+    this.star.endFill();
   }
 
   generateSprite = (X, Y, values) => {
@@ -111,7 +123,7 @@ class Explosion extends Component{
   getParticles = ()=>{
     this.emitter = new particles.Emitter(
       this.stage,
-      [PIXI.Texture.from(circle_blue)],
+      [PIXI.Texture.from(circle_yellow)],
       {
         alpha: {
           list: [
@@ -223,40 +235,29 @@ class Explosion extends Component{
     this.stage.removeChildAt(2),
     this.stage.removeChildAt(1),
     this.stage.removeChildAt(0),
-    this.explode()
+    this.explode("FFD027", this.renderer.width / 2, this.renderer.height / 2)
+
+    setTimeout(() =>{
+      this.counter +=1;
+      this.explode("268AFF", this.renderer.width / 2 - 30, this.renderer.height / 2);
+    }, 600)
+
+    setTimeout(() =>{
+      this.counter +=1;
+      this.explode("c42af0", this.renderer.width / 2 - 70, this.renderer.height / 2);
+    }, 900)
+  
+    setTimeout(() =>{
+      this.counter +=1;
+      this.explode("7828FD", this.renderer.width / 2 + 70, this.renderer.height / 2);
+    }, 1200)
     })
   }
 
-  drawStar = ()=>{
-    this.star = new PIXI.Graphics();
-    this.star.beginFill(0x3134A1);
-    this.star.drawStar(50, 50, 10, 50, 18, 5);
-    this.star.endFill();
-
-    this.texture = new PIXI.RenderTexture.create(this.star.width, this.star.height);
-    this.renderer.render(this.star, this.texture);
-
-    this.sprite = new PIXI.Sprite(this.texture);
-    this.sprite.position.x = 700;
-    this.sprite.position.y = 390;
-    this.sprite.position.x = this.renderer.width / 2;
-    this.sprite.position.y = this.renderer.height / 2;
-    this.sprite.scale.set(0.5);
-
-    var animate = () => {
-      requestAnimationFrame(animate);
-      this.sprite.rotation -=0.05;
-      this.renderer.render(this.stage);
-    }
-    animate();
-
-    this.getStars();
-  };
-
-  explode = () => {
+  explode = (color, x, y) => {
     this.emitter = new particles.Emitter(
       this.stage,
-      [PIXI.Texture.from(circle_blue)],
+      [PIXI.Texture.from(circle_yellow)],
       {
         "alpha": {
           "start": 1,
@@ -267,8 +268,8 @@ class Explosion extends Component{
           "end": 0.01
         },
         "color": {
-          "start": "FFD027",
-          "end": "FFD027"
+          "start": color,
+          "end": color
         },
         "speed": {
           "start": 500,
@@ -303,103 +304,21 @@ class Explosion extends Component{
           r: 10
         }
       }
-  );
+    );
 
-  this.emitter.updateOwnerPos(this.renderer.width / 2, this.renderer.height / 2);
-  var elapsed = Date.now();    
-  var updateFrame = () => {
-    requestAnimationFrame(updateFrame);
-    var now = Date.now();
-    var delta = (now - elapsed) * 0.001;
-    this.emitter.update(delta);
-    elapsed = now;
-    this.renderer.render(this.stage); 
-  };
-  updateFrame();
-  this.emitter.emit = true;
-
-  setTimeout(() =>{
-    this.counter +=1;
-    this.explode2("268AFF", this.renderer.width / 2 - 30, this.renderer.height / 2);
-  }, 600)
-
-  setTimeout(() =>{
-    this.counter +=1;
-    this.explode2("c42af0", this.renderer.width / 2 - 70, this.renderer.height / 2);
-  }, 900)
-
-  setTimeout(() =>{
-    this.counter +=1;
-    this.explode2("7828FD", this.renderer.width / 2 + 70, this.renderer.height / 2);
-  }, 1200)
-}
-
-  explode2 = (color, x, y) => {
-    this.counter += 1
-    this.emitter = new particles.Emitter(
-      this.stage,
-      [PIXI.Texture.from(circle_blue)],
-      {
-        "alpha": {
-          "start": 1,
-          "end": 0.1
-        },
-        "scale": {
-          "start": 0.2,
-          "end": 0.01
-        },
-        "color": {
-          "start": color,
-          "end": color
-        },
-        "speed": {
-          "start": 500,
-          "end": 0
-        },
-        "startRotation": {
-          "min": 0,
-          "max": 360
-        },
-        "rotationSpeed": {
-          "min": 0,
-          "max": 200
-        },
-        "lifetime": {
-          "min": 0.5,
-          "max": 0.5
-        },
-        "blendMode": "normal",
-        "particlesPerWave" : 10,
-        "frequency": 0.001,
-        "emitterLifetime": 0.1,
-        "maxParticles": 100,
-        "pos": {
-          "x": 0,
-          "y": 0
-        },
-        "addAtBack": true,
-        "spawnType": "circle",
-        "spawnCircle": {
-          x: 0,
-          y: 0, 
-          r: 15
-        }
-      }
-  );
-
-  this.emitter.updateOwnerPos(x, y);
-  var elapsed = Date.now();    
-  var updateFrame = () => {
-    requestAnimationFrame(updateFrame);
-    var now = Date.now();
-    var delta = (now - elapsed) * 0.001;
-    this.emitter.update(delta);
-    elapsed = now;
-    this.renderer.render(this.stage); 
-  };
-  updateFrame();
-  this.emitter.emit = true;
-  };
+    this.emitter.updateOwnerPos(x, y);
+    var elapsed = Date.now();    
+    var updateFrame = () => {
+      requestAnimationFrame(updateFrame);
+      var now = Date.now();
+      var delta = (now - elapsed) * 0.001;
+      this.emitter.update(delta);
+      elapsed = now;
+      this.renderer.render(this.stage); 
+    };
+    updateFrame();
+    this.emitter.emit = true;
+  }
 
   render(){
     return (

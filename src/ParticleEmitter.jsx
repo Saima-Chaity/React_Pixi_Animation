@@ -42,8 +42,6 @@ class ParticleEmitter extends Component{
     this.texture = null;
     this.sprite = null;
     this.emitter = '';
-    this.x = 0;
-    this.y = 0;
   }
 
   componentDidMount(){
@@ -62,7 +60,6 @@ class ParticleEmitter extends Component{
   }
 
   onMouseMove = (event) => {
-    console.log(event)
     if((event.clientX < 850 && event.clientY < 290)){
       this.emitter.emit = true;
       this.emitter.resetPositionTracking();
@@ -265,11 +262,6 @@ class ParticleEmitter extends Component{
           y: parseInt(`${this.state.spawnCircleY ? this.state.spawnCircleY : 0}`),
           r: parseInt(`${this.state.spawnCircleR > 0 ? this.state.spawnCircleR : 5}`),
         },
-        // spawnCircle: {
-        //   x: 0,
-        //   y: 0,
-        //   r: 5,
-        // },
         spawnRect: {
           x: parseInt(`${this.state.spawnRectX ? this.state.spawnRectX : 0}`),
           y: parseInt(`${this.state.spawnRectY ? this.state.spawnRectY : 0}`),
