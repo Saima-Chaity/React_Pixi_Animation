@@ -31,6 +31,7 @@ class Explosion extends Component{
 
   showNextAnimation = () => {
     this.setState({nextAnimation: true})
+    this.updateContainer.removeChild(this.renderer.view)
   }
 
   drawStar = ()=>{

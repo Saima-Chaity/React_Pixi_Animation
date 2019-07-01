@@ -16,24 +16,23 @@ class Graphics extends Component{
     this.renderer = new PIXI.autoDetectRenderer({transparent:false, antialias:true, autoResize:true})
     this.renderer.resize(window.innerWidth/1.5, window.innerHeight/1.8);
     this.renderer.backgroundColor = 0x000000;
-    this.popCounter = 0;
     this.colors = ['26a3ff', '13ce66', 'ff49db', 'af8dd1', '9162bf', 'ff7849', 'ffc82c']
   }
 
   componentDidMount(){
     this.updateContainer.appendChild(this.renderer.view);
-
     this.getAllTheShapes(this.circle = "circle");
     setTimeout(()=>{
       this.getAllTheShapes(this.rect = "rect");
-    }, 2000)
+    }, 3000)
     setTimeout(()=>{
       this.getAllTheShapes(this.star = "star");
-    }, 4000)
+    }, 6000)
   }
 
   showNextAnimation = () => {
     this.setState({nextAnimation: true})
+    this.updateContainer.removeChild(this.renderer.view)
   }
 
   getAllTheShapes = (value)=>{

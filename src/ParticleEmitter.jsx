@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import * as PIXI from 'pixi.js';
 import * as particles from 'pixi-particles';
 import SideMenu from './SideMenu';
-import Explosion from './Explosion';
 import rainbow from "./rainbow.png";
 import './App.css';
 
@@ -295,10 +294,9 @@ class ParticleEmitter extends Component{
         {this.state.nextAnimation == false ?
         <div>
           <div ref={(c) => this.updateContainer = c}></div>
-          <button className="next" onClick={this.showNextAnimation}>Next</button>  
           <button className="properties" onClick = {this.changeProperties}>Properties</button>
         </div>
-        : <Explosion/>}   
+        : ''}   
         <div className="SideBar">
           {this.state.changeProperties ?
           <SideMenu 
