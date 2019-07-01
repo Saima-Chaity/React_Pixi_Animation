@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ParticleEmitter from './ParticleEmitter';
+import Explosion from "./Explosion";
 
 class App extends Component{
   constructor(props){
@@ -11,7 +11,7 @@ class App extends Component{
   render(){
     return (
       <div>
-        <ParticleEmitter />
+        <Explosion />
       </div>
     );
   }
