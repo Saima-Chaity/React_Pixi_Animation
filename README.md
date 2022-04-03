@@ -12,7 +12,7 @@ These are few sample animations I have developed using Pixi.js.
 
 ### Some screenshots :
 
-**Partcle Emitter :**
+**Particle Emitter :**
 - This is an particle emiiter animation where user can pass different values and generate different shape. The origin of the emitter will change based on mouse position on the page.
 
 <img width="1265" alt="Screen Shot 2019-08-10 at 11 09 40 PM" src="https://user-images.githubusercontent.com/31779751/62830475-963bdb00-bbc4-11e9-8fea-ec1e08879071.png">
